@@ -9,7 +9,7 @@ use Webfan\Homepagesystem\EventFlow\StateVM;
 
 class EventModule
 {
-	const VERSION = '2.0.2';
+	const VERSION = '3.0.0';
 	
 	const FM = 'frdl%ev%hps'; //filemarker
 	const FM_SPLIT = "/[\%]/";
@@ -112,7 +112,7 @@ class EventModule
 	public function filepath($action = null){
 		if(null===$action)$action=$this->action;
 		$a = preg_replace("/[^A-Za-z0-9\_\-]/", '_', $action).'.'.strlen($action).'.'.sha1($action);
-		return $this->dirCompiled.$a.'.'.'event.compiled.php';
+		return $this->dirCompiled.'on'.ucfirst($a).'.'.'event.compiled.php';
 	}	
 	
 	
@@ -147,22 +147,26 @@ class EventModule
 	}
 	
 	
-	public static function register($action, $eventName, $listener, $obj = null, $once = false){
+	public static function register($action, $eventName, $listener, $obj = null, $once = false, $save = true){
 		$E = new self($action, true);
-		@self::unregister($action, $eventName, $callback, $obj);
+		@self::unregister($action, $eventName, $callback, $obj, false);
 		$method = (true===$once) ? 'once' : 'on';				
 		$E->{$method}($eventName, $E->wrap($listener, $obj), $obj);
-		$E->save();			
+		     if(true===$save){
+				 $E->save(true);
+			 }		
 		return $E;
 	}
 	
-	public static function unregister($action, $eventName = null, $listener = null, $obj = null){
+	public static function unregister($action, $eventName = null, $listener = null, $obj = null, $save = true){
 		$E = new self($action, true);
 		$method = 'removeEventListener';
 		
 		if(null !== $eventName){
 		     $E->{$method}($eventName, $E->wrap($listener, $obj), $obj);
-		     $E->save();
+		     if(true===$save){
+				 $E->save(true);
+			 }
 		}
 		
 		if(null === $eventName || 0 === count($E->getEvents() ) ){
@@ -178,7 +182,7 @@ class EventModule
 	
 
 	
-	public function save(){
+	public function save($reload = true){
 		if(!is_dir($this->dirCompiled)){
 		 //  $this->fs()->createDir($this->dirCompiled, 0775, true);	
 			 mkdir($this->dirCompiled, 0775, true);
@@ -210,5 +214,11 @@ EMITTERPHP;
 		  file_put_contents($this->filepath(),  $cont);
 		
 		  chmod($this->filepath(), 0775);	
+		
+		if(true === $reload){
+		  unset(self::$emitters[$this->action]);
+		  $this->_loadEmitter($this->emitter);	
+		  self::$emitters[$this->action] = &$this->emitter;
+		}
 	}
 }
