@@ -10,6 +10,7 @@
   },	  
   "autoload": {
         "psr-4": {
+	    "webfan\\hps\\": "src/webfan/hps/",	
             "Webfan\\App\\": "src/Webfan/App/",
             "Webfan\\Homepagesystem\\EventFlow\\": "src/Webfan/Homepagesystem/EventFlow/"
         }
