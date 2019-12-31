@@ -1,0 +1,16 @@
+{
+  "name" : "frdl/event-module",
+  "type" : "frdl-module",
+  "description": "Register EventHandlers to be lazy loaded.",	  
+  "license": ["MIT"],	  
+  "require" : {
+	    "php": ">=5.3",
+            "frdl/webfan" : "*"
+  },	  
+  "autoload": {
+        "psr-4": {
+            "Webfan\\App\\": "src/Webfan/App/",
+            "Webfan\\Homepagesystem\\EventFlow\\": "src/Webfan/Homepagesystem/EventFlow/",
+        }
+  }  
+}
