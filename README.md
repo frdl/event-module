@@ -12,7 +12,7 @@ $my_directory =  __DIR__.\DIRECTORY_SEPARATOR.'compiled-events';
  ### Register Events
  Register the events by your configuration/build script/process.
  ````php
- @\Webfan\App\EventModule::register('test', 'testing', static function($eventName, $emitter, \webfan\hps\Event $Event){
+ \Webfan\App\EventModule::register('test', 'testing', static function($eventName, $emitter, \webfan\hps\Event $Event){
         print_r($Event->getArgument("testParam"));
 });
  ````
