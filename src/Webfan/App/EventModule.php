@@ -112,7 +112,7 @@ class EventModule
 	public function filepath($action = null){
 		if(null===$action)$action=$this->action;
 		$a = preg_replace("/[^A-Za-z0-9\_\-]/", '_', $action).'.'.strlen($action).'.'.sha1($action);
-		return $this->dirCompiled.'.'.$a.'.'.'event.compiled.php';
+		return $this->dirCompiled.$a.'.'.'event.compiled.php';
 	}	
 	
 	
