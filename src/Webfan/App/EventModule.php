@@ -6,7 +6,6 @@
 namespace Webfan\App;
 use webfan\hps\Event;
 use Webfan\Homepagesystem\EventFlow\StateVM;
-
 class EventModule
 {
 	const VERSION = '3.0.0';
@@ -22,11 +21,8 @@ class EventModule
 	protected $mark;
 	
 	protected $dirCompiled;
-
 	protected static $dirBase = 'compiled.events';
-
 	
-
 	public static function setBaseDir($dirBase){
 		if(!is_dir($dirBase) || !is_writable($dirBase)){
 		  throw new \Exception('Cannot apply baseDir in '.__METHOD__);	
@@ -77,17 +73,15 @@ class EventModule
 		
 		if(!isset(self::$emitters[$action]) || true ===$reload){
 		   $this->_loadEmitter($this->emitter);	
-		   self::$emitters[$action] = &$this->emitter;
+		   self::$emitters[$action] = $this->emitter;
 		}else{
-			$this->emitter = &self::$emitters[$action];
+			$this->emitter = self::$emitters[$action];
 		}
 		
 		
 		
-
 	}
 	
-
 	
 	public function __call($name, $params){
 		    if(null!==$this->emitter){
@@ -180,7 +174,6 @@ class EventModule
 	}	
 	
 	
-
 	
 	public function save($reload = true){
 		if(!is_dir($this->dirCompiled)){
@@ -216,9 +209,10 @@ EMITTERPHP;
 		  chmod($this->filepath(), 0775);	
 		
 		if(true === $reload){
-		//  unset(self::$emitters[$this->action]);
-		 // $this->_loadEmitter($this->emitter);	
-		  self::$emitters[$this->action] = &$this->emitter;
+		  //unset(self::$emitters[$this->action]);
+		  //$this->_loadEmitter($this->emitter);	
+		  //self::$emitters[$this->action] = &$this->emitter;
+			self::$emitters[$this->action] = $this->emitter;
 		}
 	}
 }
