@@ -216,8 +216,8 @@ EMITTERPHP;
 		  chmod($this->filepath(), 0775);	
 		
 		if(true === $reload){
-		  unset(self::$emitters[$this->action]);
-		  $this->_loadEmitter($this->emitter);	
+		//  unset(self::$emitters[$this->action]);
+		 // $this->_loadEmitter($this->emitter);	
 		  self::$emitters[$this->action] = &$this->emitter;
 		}
 	}
