@@ -15,8 +15,8 @@ return  [
         },	
 	
 	'state.emitter' => decorate(function($emitter, ContainerInterface $c){
-	   $emitter->once('bootstrap', function($eventName, $emitter, $container){
-                \Webfan\App\EventModule::setBaseDir($container->get('dir.compiled.events'));
+	   $emitter->once('bootstrap', function($eventName, $emitter, \webfan\hps\Event $Event){
+                \Webfan\App\EventModule::setBaseDir($Event->getArgument('container')->get('dir.compiled.events'));
            });
 		return $emitter;
 	}),
