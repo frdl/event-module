@@ -4,7 +4,7 @@
   "description": "Register EventHandlers to be lazy loaded.",	  
   "license": ["MIT"],	  
   "require" : {
-	    "php": ">=7.2",
+	    "php": ">=7.1",
             "frdl/webfan" : "*",
 	    "jeremeamia/superclosure" : "2.4.0"
   },	  
