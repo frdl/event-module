@@ -134,7 +134,7 @@ class EventModule
 	
 	public static function register($action, $eventName, $listener, $obj = null, $once = false, $save = true){
 		$E = new self($action);
-		self::unregister($action, $eventName, $callback, $obj, false);
+		self::unregister($action, $eventName, $listener, $obj, false);
 		$method = (true===$once) ? 'once' : 'on';				
 		$E->{$method}($eventName, $E->wrap($listener, $obj), $obj);
 		     if(true===$save){
