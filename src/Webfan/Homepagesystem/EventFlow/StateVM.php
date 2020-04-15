@@ -48,7 +48,7 @@ class StateVM extends State implements \Serializable
 	
   protected $SecretSigningKey = null;
   public $serializeClosures = true;	
-	
+  protected $tagName = __CLASS__;	
 	
 	
 	
