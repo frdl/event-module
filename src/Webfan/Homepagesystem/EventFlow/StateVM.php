@@ -48,7 +48,7 @@ class StateVM extends State implements \Serializable
 	
   protected $SecretSigningKey = null;
   public $serializeClosures = true;	
-  protected $tagName = __CLASS__;	
+//  protected $tagName = __CLASS__;	
 	
 	
 	
@@ -292,7 +292,7 @@ class StateVM extends State implements \Serializable
 		
 		$data = array(
 			'events' => $this->events,
-			'tagName' => $this->tagName,
+			//'tagName' => $this->tagName,
 			'name' => $this->name,
 			'context' => $context
 		);	
@@ -329,9 +329,9 @@ class StateVM extends State implements \Serializable
 		
 		$this->setEvents($data['events']);		
 		
-		if( $this->tagName !== $data['tagName']){
+		  //if( $this->tagName !== $data['tagName']){
 		   //warning ??? 	
-		}		
+		  //}		
 		
 		
 		
