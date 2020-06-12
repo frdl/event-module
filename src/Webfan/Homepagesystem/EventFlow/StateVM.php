@@ -40,6 +40,8 @@ namespace Webfan\Homepagesystem\EventFlow;
 use webfan\hps\Event as Event;
 
 
+use function Opis\Closure\{serialize as cserialize, unserialize as cunserialize};
+
 
 class StateVM extends State implements \Serializable
 {
@@ -67,8 +69,9 @@ class StateVM extends State implements \Serializable
 	  
 	  if($obj === null){
 		  if(true===$this->serializeClosures){
-		   $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-		   $cb = $serializer->serialize($callback);
+		   //$serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+		  // $cb = $serializer->serialize($callback);
+		     $cb = cserialize($callback);
 		  }else{
 			   $cb = $callback;
 		  }
@@ -113,8 +116,9 @@ class StateVM extends State implements \Serializable
 		
 		
 		if(is_string($callback)){
-			 $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-			 $callback = $serializer->unserialize($callback);
+			// $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+			// $callback = $serializer->unserialize($callback);
+			 $callback = cunserialize($callback);
 		}	
 		
      	if(!is_callable($callback)){
@@ -146,9 +150,9 @@ class StateVM extends State implements \Serializable
 	  $k = $this->_genKey($callback);
    	  $callback= ($obj === null) ? $callback : [$obj, $callback];
 		 
-	  $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-	  $cb = (is_callable($callback)) ? $serializer->serialize($callback) : $callback;
-	 
+	//  $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+	//  $cb = (is_callable($callback)) ? $serializer->serialize($callback) : $callback;
+	 $cb = (is_callable($callback)) ? cserialize($callback) : $callback;
 	//  $bin = new \frdl\webfan\Serialize\Binary\bin;  
 	
 	//  	$k = $bin->serialize( $cb );
@@ -179,8 +183,11 @@ class StateVM extends State implements \Serializable
 	
 	
   protected function _genKey($cb){	 
-	  $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-	  $cb = (is_callable($cb)) ? $serializer->serialize($cb) : $cb;
+	 // $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+	//  $cb = (is_callable($cb)) ? $serializer->serialize($cb) : $cb;
+	   $cb = (is_callable($cb)) ? cserialize($cb) : $cb;
+	  
+	  
 	  
 	  $bin = new \frdl\webfan\Serialize\Binary\bin;  
 	  $d = $bin->serialize( $cb );
@@ -197,10 +204,11 @@ class StateVM extends State implements \Serializable
 	  
 	   $listener = ($obj === null) ? $callback : array($obj, $callback);
 	  
-      $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+     // $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
 	  $bin = new \frdl\webfan\Serialize\Binary\bin;  
 	  // $sl =(is_callable( $listener )) ? $bin->serialize($serializer->serialize($listener)) : $bin->serialize($listener);
-	  $sl =(is_callable( $listener )) ? $serializer->serialize($listener) : $listener;
+	//  $sl =(is_callable( $listener )) ? $serializer->serialize($listener) : $listener;
+	  $sl =(is_callable( $listener )) ? cserialize($listener) : $listener;
 	  
 
   //   $indexOf = 0;
@@ -273,11 +281,13 @@ class StateVM extends State implements \Serializable
 					 return call_user_func_array($list, func_get_args());  
 				   };   
 				   
-			       $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-			       $events[$name][$index] = $serializer->serialize($l);					   
+			     //  $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+			    //   $events[$name][$index] = $serializer->serialize($l);	
+				   $events[$name][$index] = cserialize($l);	
 			   }  elseif( !is_string($listener) ){
-			       $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-			       $events[$name][$index] = $serializer->serialize($listener);		
+			      // $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+			   //    $events[$name][$index] = $serializer->serialize($listener);	
+				  $events[$name][$index] = cserialize($listener);	
 			  }  else {
 				   
 				    $events[$name][$index] = $listener;
@@ -320,8 +330,9 @@ class StateVM extends State implements \Serializable
 		foreach($data['events'] as $name => $listeners){
 		   foreach(	$listeners as $index => $listener){
 			   if( !is_string($listener) &&  !is_array($listener) ){
-			       $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
-			       $data['events'][$name][$index] = $serializer->unserialize($listener);		
+			     //  $serializer = (null=== $this->SecretSigningKey) ? new \SuperClosure\Serializer() : new \SuperClosure\Serializer(null, $this->SecretSigningKey);
+			    //   $data['events'][$name][$index] = $serializer->unserialize($listener);	
+				  $data['events'][$name][$index] = cunserialize($listener);	
 				   
 			  }  
 		   }
