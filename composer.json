@@ -6,7 +6,8 @@
   "require" : {
 	    "php": ">=7.1",
             "frdl/webfan" : "*",
-	    "opis/closure": "^3.5"
+	    "opis/closure": "^3.5",
+	    "jeremeamia/superclosure" : "*"
   },	  
   "autoload": {
         "psr-4": {
