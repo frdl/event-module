@@ -43,7 +43,7 @@ use webfan\hps\Event as Event;
 use function Opis\Closure\{serialize as cserialize, unserialize as cunserialize};
 
 
-class StateVM extends State implements \Serializable
+class StateVM2 extends State implements \Serializable
 {
 	
   const K = '^';	
@@ -145,7 +145,8 @@ class StateVM extends State implements \Serializable
 	
 	
 	
-	 public function once($event, $callback, $obj = null) {
+	
+public function once($event, $callback, $obj = null) {
    	  $THAT = $this; 
 	  $k = $this->_genKey($callback);
    	  $callback= ($obj === null) ? $callback : [$obj, $callback];
@@ -160,7 +161,7 @@ class StateVM extends State implements \Serializable
 		 
 		 
        $func =function($event, $THAT, $data) use($cb, $k){
-		    $callback = unserialize($cb);
+		    $callback = cunserialize($cb);
    	  	 
 		  //  $THAT->removeEventListener($event, $fn);
 		    //  unset($THAT->events[$event][$k]);
@@ -297,14 +298,14 @@ class StateVM extends State implements \Serializable
 		
 		$context = $this->_context;
 		
-		$context = serialize($context);
+		//$context = serialize($context);
 		
 		
 		$data = array(
 			'events' => $this->events,
 			//'tagName' => $this->tagName,
 			'name' => $this->name,
-			'context' => $context
+			//'context' => $context
 		);	
 		
 		$bin = new \frdl\webfan\Serialize\Binary\bin;
@@ -318,9 +319,9 @@ class StateVM extends State implements \Serializable
 		$bin = new \frdl\webfan\Serialize\Binary\bin;
 		$data = $bin->unserialize($data);
 		
-		$data['context'] = unserialize($data['context']);
+		//$data['context'] = unserialize($data['context']);
 		
-		$this->_context=$data['context'];
+		//$this->_context=$data['context'];
 		
 		$this->name = $data['name'];
 		
