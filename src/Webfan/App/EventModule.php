@@ -5,13 +5,14 @@
 */
 namespace Webfan\App;
 use webfan\hps\Event;
-use Webfan\Homepagesystem\EventFlow\StateVM;
+use Webfan\Homepagesystem\EventFlow\StateVM2;
+
 class EventModule
 {
 
 	
-	const MODEL = StateVM::class;
-    protected $action;
+	const MODEL = StateVM2::class;   
+	protected $action;
 	protected static $emitters = [];
 	protected $emitter = null;
 	protected $mark;
