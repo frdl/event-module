@@ -176,7 +176,7 @@ class EventModule2
 		  
 		  //$cont = $this->mark . serialize($this->emitter);
 	$t = time();	
-		$emitterStr = addslashes(serialize($this->emitter));
+		$emitterStr = base64_encode(serialize($this->emitter));
 		
         $num = count($this->getEvents() );
 		$action = $this->action;
@@ -192,10 +192,10 @@ BANNER;
 $cont =<<<EMITTERPHP
 <?php
 $banner	
-return unserialize(<<<PHPCODEEMITTERSTRING
+return unserialize(base64_decode(<<<PHPCODEEMITTERSTRING
 $emitterStr
 PHPCODEEMITTERSTRING
-);
+));
 	
 EMITTERPHP;
 */
@@ -203,7 +203,7 @@ EMITTERPHP;
 $cont =<<<EMITTERPHP
 <?php
 $banner	
-return unserialize('$emitterStr');
+return unserialize(base64_decode('$emitterStr'));
 	
 EMITTERPHP;		
 		
