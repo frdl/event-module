@@ -7,7 +7,7 @@ namespace Webfan\App;
 use webfan\hps\Event;
 use Webfan\Homepagesystem\EventFlow\StateVM2;
 
-class EventModule
+class EventModule2
 {
 
 	
