@@ -51,8 +51,11 @@ class StateVM2 extends State implements \Serializable
   protected $SecretSigningKey = null;
   public $serializeClosures = true;	
 //  protected $tagName = __CLASS__;	
+	protected $events = [];
 	
-	
+  public function getEvents(){
+	  return $this->events;
+  }
 	
   public function on($event, $callback, $obj = null, &$index = null) {
     if (!isset($this->events[$event])) {
@@ -245,9 +248,7 @@ class StateVM2 extends State implements \Serializable
 		return $this;
 	}	
 	
-	public function getEvents(){
-	        return $this->events;	
-	}
+
 	
 	public function test(){
 	       echo '<pre>test; '.__METHOD__.'</pre>';
@@ -288,16 +289,16 @@ class StateVM2 extends State implements \Serializable
 		   }
 		}	
 		
-		$context = $this->_context;
+		//$context = $this->_context;
 		
-		$context = serialize($context);
+	///	$context = serialize($context);
 		
 		
 		$data = array(
 			'events' => $this->events,
 			//'tagName' => $this->tagName,
 			'name' => $this->name,
-			'context' => $context
+		//	'context' => $context
 		);	
 		
 		$bin = new \frdl\webfan\Serialize\Binary\bin;
@@ -311,9 +312,9 @@ class StateVM2 extends State implements \Serializable
 		$bin = new \frdl\webfan\Serialize\Binary\bin;
 		$data = $bin->unserialize($data);
 		
-		$data['context'] = unserialize($data['context']);
+		//$data['context'] = unserialize($data['context']);
 		
-		$this->_context=$data['context'];
+		//$this->_context=$data['context'];
 		
 		$this->name = $data['name'];
 		
@@ -337,7 +338,7 @@ class StateVM2 extends State implements \Serializable
 		  //}		
 		
 		
-		
+		return $this;
     }  
 
 }
