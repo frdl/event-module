@@ -235,7 +235,7 @@ class Events
 
 BANNER;
 		
-		$code = "<?php\n" . $banner . "\n" . $class;
+		$code = "<?php\n" . $banner . "\n" . $namespace;
 		
 		$code .= "\n\n// Event emitter factory function\nreturn function() { return new \\Webfan\\App\\Generated\\GeneratedEventEmitter(); };";
 		
