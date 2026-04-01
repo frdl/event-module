@@ -5,7 +5,8 @@
   "license": ["MIT"],	  
   "require" : {
 	    "php": ">=7.1",
-            "frdl/webfan" : "*",
+        "frdl/webfan" : "*",
+	    "nette/php-generator": "^3.0 || ^4.0",
 	    "opis/closure": "^3.5",
 	    "jeremeamia/superclosure" : "*"
   },	  
